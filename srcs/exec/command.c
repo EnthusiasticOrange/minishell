@@ -6,7 +6,7 @@
 /*   By: mjuli <mjuli@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 15:52:53 by mjuli             #+#    #+#             */
-/*   Updated: 2020/12/21 18:31:00 by mjuli            ###   ########.fr       */
+/*   Updated: 2020/12/21 20:28:55 by mjuli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ static void	run_fork(int in, int pipe_arr[2], int argc, char **argv)
 		g_cmd_arr[get_func_id(argv[0])](argc, argv);
 		exit(g_state.retcode);
 	}
+	if (pipe_arr[1] != STDOUT_FILENO)
+		close(pipe_arr[1]);
 	close(in);
-	close(pipe_arr[1]);
 }
 
 static int	pipe_commands(char **pipe_cmds, int count)
@@ -106,7 +107,6 @@ static void	run_last(int in, int count, char *cmd)
 			run_fork(in, pipe_arr, argc, argv);
 		free_array(argv);
 	}
-	close(pipe_arr[1]);
 }
 
 void		run_command_line(char *cmd)

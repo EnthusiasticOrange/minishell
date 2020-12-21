@@ -6,32 +6,39 @@
 /*   By: mjuli <mjuli@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 20:39:38 by mjuli             #+#    #+#             */
-/*   Updated: 2020/12/20 23:48:45 by mjuli            ###   ########.fr       */
+/*   Updated: 2020/12/21 20:43:03 by mjuli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*escape_string(char *str)
+static size_t	count_escaped_len(char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (*str)
+	{
+		if (*(str) == '\\' || *(str) == '"')
+			len++;
+		str++;
+		len++;
+	}
+	return (len);
+}
+
+char			*escape_string(char *str)
 {
 	size_t	len;
 	char	*new_str;
 
-	len = 0;
-	new_str = str;
-	while (*str)
-	{
-		if (*(str++) == '\\')
-			len++;
-		len++;
-	}
-	str = new_str;
+	len = count_escaped_len(str);
 	if ((new_str = ft_calloc(1, len + 1)))
 	{
 		len = 0;
 		while (*str)
 		{
-			if (*(str) == '\\')
+			if (*(str) == '\\' || *(str) == '"')
 				new_str[len++] = '\\';
 			new_str[len++] = *(str++);
 		}
@@ -39,7 +46,7 @@ char	*escape_string(char *str)
 	return (new_str);
 }
 
-char	*get_var_name(const char *line)
+char			*get_var_name(const char *line)
 {
 	size_t len;
 
@@ -54,7 +61,7 @@ char	*get_var_name(const char *line)
 	return (ft_substr(line, 0, len));
 }
 
-char	*get_var_value(const char *var_name)
+char			*get_var_value(const char *var_name)
 {
 	char	*var_value;
 
