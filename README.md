@@ -5,9 +5,6 @@ The objective of this project is to create a simple shell. It helps to learn a l
 
 For more detais about this project refer to [**`the subject`**](en.subject.pdf).
 
-## Prerequisites
-THe project is using `MiniLibX` library. It is a tiny graphics library and can be used only on macOS. Library source files are located in [`srcs/mlx`](srcs/mlx) directory of this repository.
-
 ## Compilation
 The project uses the `gcc` compiler in `Makefile`. The resulting binary is called `minishell`.
 
